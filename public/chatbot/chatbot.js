@@ -1,8 +1,18 @@
 // Chatbot with Static Topic Buttons
+const startOptions = [
+  { text: "Ik vraag me af wat Premium is?", action: "go_premium" },
+  // Client can enable these by removing the comments:
+  // { text: "vul hier de vraagtitel in", action: "go_xyz" },
+  // { text: "vul hier de vraagtitel in", action: "go_xyz" }
+];
 
 const topics = {
+    fallback: {
+    text: "Geen probleem! Kies een onderwerp om meer over te weten te komen.",
+    buttons: startOptions
+  },
   premium: {
-    text: "💎 Premium posities geven je advertentie meer zichtbaarheid. Silver, Gold en Titanium zijn de drie mogelijkheden, elk met hun voordelen.",
+    text: "💎 Premium posities zorgen voor extra zichtbaarheid van je advertentie. Er zijn drie opties: Silver, Gold en Titanium. Ze zitten op strategische plekken in de tijdlijn en geven je meer impact — tegen een iets hogere prijs.",
     buttons: [
       { text: "Wat is Silver?", action: "go_silver" },
       { text: "Wat is Gold?", action: "go_gold" },
@@ -10,45 +20,49 @@ const topics = {
     ]
   },
   silver: {
-    text: "🥈 Silver is de voorlaatste advertentie in de ad reel. Net voor Gold dus—een strategisch sterke plek tegen een kleine meerprijs.",
+   text: "🥈 Silver is de voorlaatste advertentie in de ad reel. Net voor Gold dus — een strategisch sterke plek. 🎯 Gemiddeld kijkt 70–80% van de zaal actief mee op dit moment. Een slimme keuze voor een kleine meerprijs.",
     buttons: [
       { text: "Wat wordt er bedoeld met de ad reel?", action: "go_reel" },
       { text: "Wat is Gold?", action: "go_gold" }
     ]
   },
   gold: {
-    text: "🥇 Gold is de laatste advertentie vóór de jingle. Je advertentie sluit het hoofdblok af. Dat geeft veel aandacht net voor het pauzemoment.",
+    text: "🥇 Gold is de laatste advertentie vóór de jingle. Je advertentie sluit het hoofdblok af, net voor het pauzemoment. 🧠 Ongeveer 85–90% van de zaal kijkt dan actief mee — een van de sterkste posities qua impact.",
     buttons: [
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" }
     ]
   },
   titanium: {
-    text: "🚀 Titanium wordt getoond ná de jingle en vlak vóór de trailers. Het publiek zit dan al klaar, dus maximale zichtbaarheid gegarandeerd.",
+    text: "🚀 Titanium wordt getoond ná de jingle en vlak vóór de trailers. Het publiek zit dan al klaar, dus maximale zichtbaarheid gegarandeerd. 👁️ Ongeveer 95–100% van de zaal kijkt mee — de allersterkste positie voor impact.",
     buttons: [
       { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
-      { text: "Waarom kost het meer?", action: "go_cost" }
+      { text: "Waarom kost het meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" }
     ]
   },
   reel: {
-    text: "📦 De ad reel is een blok van 10–13 minuten advertenties voor de film. Silver en Gold zijn de laatste slots binnen dit blok.",
+    text: "📦 De ad reel is een blok van 10–13 minuten advertenties vóór de film. Silver en Gold zijn de laatste plekken in deze reel. 🚫 Titanium zit niet in de ad reel — die wordt apart getoond, ná de jingle en vóór de trailers.",
     buttons: [
       { text: "Wat komt na de reel?", action: "go_titanium" },
-      { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" }
+      { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" },
+      { text: "Wat is Titanium?", action: "go_titanium" }
     ]
   },
   jingle: {
     text: "🔔 De jingle speelt twee keer: één keer vóór de ad reel en nog eens voor Titanium. Het markeert de overgang naar trailers of film.",
     buttons: [
       { text: "Wat komt er na de jingle?", action: "go_titanium" },
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" }
+      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
+      { text: "Waarom kost Titanium meer?", action: "go_cost" }
     ]
   },
   cost: {
-    text: "💰 Premium posities kosten meer door hun strategische plaatsing. Meer zichtbaarheid = meer impact, dus logischerwijs een hogere prijs.",
+    text: "💰 De meerprijs hangt af van je campagne. Richtlijn: Silver kost ongeveer 10–15% meer dan een standaardpositie, Gold 25–30%, en Titanium zelfs 50–60% extra. Hoe strategischer de plek, hoe groter de impact én het prijskaartje.",
     buttons: [
       { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" }
+      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
+      { text: "Wat is Titanium?", action: "go_titanium" }
     ]
   },
   benefits: {
@@ -71,7 +85,16 @@ function sendQuestionFromBot(topicKey) {
   const topic = topics[topicKey] || topics.fallback;
   const chatbox = document.getElementById('chatbox');
 
-  // 1. Show typing animation immediately
+  // ✅ Inject fallback button to all topics except fallback itself
+  let buttonList = topic.buttons ? [...topic.buttons] : [];
+  if (topicKey !== "fallback") {
+    buttonList.push({
+      text: "Terug naar start",
+      action: "go_fallback"
+    });
+  }
+
+  // Show typing animation
   const typingIndicator1 = document.createElement('div');
   typingIndicator1.className = 'message bot-message typing-indicator';
   typingIndicator1.innerHTML = `
@@ -82,7 +105,7 @@ function sendQuestionFromBot(topicKey) {
   chatbox.appendChild(typingIndicator1);
   chatbox.scrollTop = chatbox.scrollHeight;
 
-  // 2. After short delay, show main message
+  // Main message after delay
   setTimeout(() => {
     typingIndicator1.remove();
 
@@ -91,37 +114,44 @@ function sendQuestionFromBot(topicKey) {
     botMsg.textContent = topic.text;
     chatbox.appendChild(botMsg);
     chatbox.scrollTop = chatbox.scrollHeight;
-
-    // 3. Wait 5 seconds before follow-up
-    setTimeout(() => {
-      // 4. Second typing animation
-      const typingIndicator2 = document.createElement('div');
-      typingIndicator2.className = 'message bot-message typing-indicator';
-      typingIndicator2.innerHTML = `
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      `;
-      chatbox.appendChild(typingIndicator2);
+    // Instantly show buttons for fallback
+    if (topicKey === "fallback") {
+      createButtons(topic.buttons, chatbox);
       chatbox.scrollTop = chatbox.scrollHeight;
+      return; // Exit early so no delay kicks in
+    }
 
-      // 5. After 2s, remove typing and show follow-up + buttons
-      setTimeout(() => {
-        typingIndicator2.remove();
-
-        const followUp = document.createElement('div');
-        followUp.className = 'message bot-message';
-        followUp.textContent = "Kan ik je bij nog iets helpen?";
-        chatbox.appendChild(followUp);
-
-        if (topic.buttons) {
-          createButtons(topic.buttons, chatbox);
-        }
-
+    setTimeout(() => {
+      // Skip follow-up line for fallback topic
+      if (topicKey !== "fallback") {
+        const typingIndicator2 = document.createElement('div');
+        typingIndicator2.className = 'message bot-message typing-indicator';
+        typingIndicator2.innerHTML = `
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        `;
+        chatbox.appendChild(typingIndicator2);
         chatbox.scrollTop = chatbox.scrollHeight;
-      }, 2000);
+        
+        setTimeout(() => {
+          typingIndicator2.remove();
+
+          const followUp = document.createElement('div');
+          followUp.className = 'message bot-message';
+          followUp.textContent = "Kan ik je bij nog iets helpen?";
+          chatbox.appendChild(followUp);
+
+          createButtons(buttonList, chatbox);
+          chatbox.scrollTop = chatbox.scrollHeight;
+        }, 2000);
+      } else {
+        // 🧼 fallback: just show the buttons immediately
+        createButtons(buttonList, chatbox);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
     }, 2000);
-  }, 1500); // Initial "thinking" delay before main response
+  }, 1500);
 }
 
 function createButtons(buttons, chatbox) {
@@ -129,9 +159,13 @@ function createButtons(buttons, chatbox) {
   container.classList.add('button-container');
 
   buttons.forEach(button => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('button-wrapper');
+
     const el = document.createElement('button');
     el.classList.add('button');
     el.textContent = button.text;
+
     el.onclick = () => {
       container.remove();
       const msg = document.createElement('div');
@@ -140,11 +174,14 @@ function createButtons(buttons, chatbox) {
       chatbox.appendChild(msg);
       sendQuestionFromBot(button.action.replace('go_', ''));
     };
-    container.appendChild(el);
+
+    wrapper.appendChild(el);
+    container.appendChild(wrapper);
   });
 
   chatbox.appendChild(container);
 }
+
 
 document.getElementById('chat-toggle').addEventListener('click', () => {
   const chatWrapper = document.getElementById('chat-wrapper');
@@ -157,17 +194,14 @@ document.getElementById('chat-close').addEventListener('click', () => {
 });
 
   if (isHidden && chatbox.childElementCount === 0) {
-    const greeting = document.createElement('div');
-    greeting.className = 'message bot-message';
-    greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
-    chatbox.appendChild(greeting);
+  const greeting = document.createElement('div');
+  greeting.className = 'message bot-message';
+  greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
+  chatbox.appendChild(greeting);
 
-    createButtons([
-      { text: "Wat zijn premium posities?", action: "go_premium" },
-      { text: "Wat wordt er bedoeld met de ad reel?", action: "go_reel" },
-      { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" },
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" }
-    ], chatbox);
-  }
+  createButtons(startOptions, chatbox);
+
+}
+
 });
 
