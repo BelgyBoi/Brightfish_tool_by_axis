@@ -22,18 +22,7 @@
     <!-- Chat content -->
     <div class="chat-container">
       <div class="chatbox" id="chatbox">
-        <div class="message bot-message">
-          <strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?
-        </div>
       </div>
-
-      <!-- User input -->
-      <div class="user-input">
-        <input type="text" id="user-input" class="input-field" placeholder="Type your question here..." />
-        <button class="button" onclick="sendQuestion()">Send</button>
-      </div>
-    </div>
-  </div>
 
   <script src="chatbot.js"></script>
 </body>
