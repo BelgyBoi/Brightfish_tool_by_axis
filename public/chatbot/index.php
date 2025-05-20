@@ -22,9 +22,6 @@
     <!-- Chat content -->
     <div class="chat-container">
       <div class="chatbox" id="chatbox">
-        <div class="message bot-message">
-          <strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?
-        </div>
       </div>
 
       <!-- User input -->
