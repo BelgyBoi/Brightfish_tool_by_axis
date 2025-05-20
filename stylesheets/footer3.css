@@ -1,0 +1,87 @@
+footer {
+    position: absolute;
+    margin-top: 153vh;
+    background-color: #111;
+    color: white;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+.footer-container {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-left {
+    flex: 1 1 20%;
+}
+
+.footer-left .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-left p {
+    margin: 10px 0;
+}
+
+.newsletter {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.newsletter input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    flex: 1;
+    font-size: 14px;
+}
+
+.newsletter button {
+    background-color: #e03131;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    flex: 2;
+}
+
+.footer-links div {
+    min-width: 120px;
+}
+
+.footer-links h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.footer-links p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.social-icons {
+    margin-top: 10px;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+}

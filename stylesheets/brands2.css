@@ -1,0 +1,89 @@
+.brands-section {
+    position: absolute;
+      background-color: #f3f3f3;
+      margin-top: 100vh;
+      padding: 60px 20px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .brands-section h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .brands-section p {
+      font-size: 16px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .brands-carousel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .arrow {
+      font-size: 32px;
+      color: gray;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-card {
+    flex: 0 0 auto;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px 25px;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .brand-card img {
+      max-height: 70px;
+      margin-bottom: 15px;
+      max-width: 150px;
+      object-fit: contain;
+    }
+
+    .brand-card span {
+      font-weight: bold;
+      font-size: 15px;
+      color: #000;
+    }
+
+    .brand-card small {
+      font-size: 12px;
+      color: #333;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .brand-card {
+        width: 100px;
+        height: auto;
+        padding: 15px;
+      }
+    }
+    .carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}

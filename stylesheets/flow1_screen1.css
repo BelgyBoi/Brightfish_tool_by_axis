@@ -1,0 +1,151 @@
+body {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brands-section {
+    margin-top: 123vh;
+}
+
+footer {
+    margin-top: 175vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    height: 80vh;
+}
+
+.innerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.innerContainer h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.audience {
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.audience label {
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+
+.mission {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.mission p {
+    margin-bottom: 20px;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+
+button.mission {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #e5f0f6;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    min-height: 50px;
+    transition: background-color 0.2s, border 0.2s;
+    width: 100%;
+    max-width: 180px;
+}
+
+
+button.mission img {
+    width: 24px;
+    height: 24px;
+}
+
+
+button.mission span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
+
+
+button.mission.selected {
+    background-color: #e1f8eb;
+    border: 3px solid #4caf50;
+}
+
+
+.premium-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    width: 100%;
+}
+
+button.mission.premium {
+    width: 100%;
+    max-width: 180px;
+    margin: 0;
+}
+
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.next-btn {
+    background-color: #e53935;
+    color: white;
+    padding: 14px 50px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.next-btn:hover {
+    background-color: #A22426;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: #333;
+}
