@@ -7,7 +7,7 @@ const startOptions = [
 ];
 
 const topics = {
-    fallback: {
+  fallback: {
     text: "Geen probleem! Kies een onderwerp om meer over te weten te komen.",
     buttons: startOptions
   },
@@ -16,70 +16,96 @@ const topics = {
     buttons: [
       { text: "Wat is Silver?", action: "go_silver" },
       { text: "Wat is Gold?", action: "go_gold" },
-      { text: "Wat is Titanium?", action: "go_titanium" }
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Waarom kosten ze meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   silver: {
-   text: "🥈 Silver is de voorlaatste advertentie in de ad reel. Net voor Gold dus — een strategisch sterke plek. 🎯 Gemiddeld kijkt 70–80% van de zaal actief mee op dit moment. Een slimme keuze voor een kleine meerprijs.",
+    text: "🥈 Silver is de voorlaatste advertentie in de ad reel. Net voor Gold dus — een strategisch sterke plek. 🎯 Gemiddeld kijkt 70–80% van de zaal actief mee op dit moment. Een slimme keuze voor een kleine meerprijs.",
     buttons: [
-      { text: "Wat wordt er bedoeld met de ad reel?", action: "go_reel" },
-      { text: "Wat is Gold?", action: "go_gold" }
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Wat is de ad reel?", action: "go_reel" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   gold: {
     text: "🥇 Gold is de laatste advertentie vóór de jingle. Je advertentie sluit het hoofdblok af, net voor het pauzemoment. 🧠 Ongeveer 85–90% van de zaal kijkt dan actief mee — een van de sterkste posities qua impact.",
     buttons: [
       { text: "Wat is Titanium?", action: "go_titanium" },
-      { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" }
+      { text: "Wat betekent de jingle?", action: "go_jingle" },
+      { text: "Waarom kost het meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   titanium: {
     text: "🚀 Titanium wordt getoond ná de jingle en vlak vóór de trailers. Het publiek zit dan al klaar, dus maximale zichtbaarheid gegarandeerd. 👁️ Ongeveer 95–100% van de zaal kijkt mee — de allersterkste positie voor impact.",
     buttons: [
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
       { text: "Waarom kost het meer?", action: "go_cost" },
-      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" }
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   reel: {
     text: "📦 De ad reel is een blok van 10–13 minuten advertenties vóór de film. Silver en Gold zijn de laatste plekken in deze reel. 🚫 Titanium zit niet in de ad reel — die wordt apart getoond, ná de jingle en vóór de trailers.",
     buttons: [
-      { text: "Wat komt na de reel?", action: "go_titanium" },
-      { text: "Wat word er bedoelt met de Brightfish jingle?", action: "go_jingle" },
-      { text: "Wat is Titanium?", action: "go_titanium" }
+      { text: "Wat is Silver?", action: "go_silver" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   jingle: {
     text: "🔔 De jingle speelt twee keer: één keer vóór de ad reel en nog eens voor Titanium. Het markeert de overgang naar trailers of film.",
     buttons: [
-      { text: "Wat komt er na de jingle?", action: "go_titanium" },
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
-      { text: "Waarom kost Titanium meer?", action: "go_cost" }
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat is de ad reel?", action: "go_reel" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   cost: {
     text: "💰 De meerprijs hangt af van je campagne. Richtlijn: Silver kost ongeveer 10–15% meer dan een standaardpositie, Gold 25–30%, en Titanium zelfs 50–60% extra. Hoe strategischer de plek, hoe groter de impact én het prijskaartje.",
     buttons: [
       { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
-      { text: "In welke volgorde worden de advertenties afgespeeld?", action: "go_timeline" },
-      { text: "Wat is Titanium?", action: "go_titanium" }
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   benefits: {
-    text: "📈 Meer zichtbaarheid zorgt voor meer impact, merkherkenning en hogere ROI. Titanium scoort hier het best.",
+    text: "📈 Meer zichtbaarheid zorgt voor meer impact, merkherkenning en hogere ROI. Titanium scoort hier het best — vooral bij bioscoopcampagnes waar iedereen al gefocust is op het scherm.",
     buttons: [
       { text: "Wat is Titanium?", action: "go_titanium" },
-      { text: "Wat is Silver?", action: "go_silver" }
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   },
   timeline: {
-    text: "🕒 Tijdlijn: [Jingle] > [Standaard ad reel] > [Premium ad reel: Silver & Gold] > [Jingle] > [Premium slot: Titanium] > [Trailers] > [Film].",
+    text: "🕒 Tijdlijn: [Jingle] > [Standaard ad reel] > [Premium ad reel: Silver & Gold] > [Jingle] > [Premium slot: Titanium] > [Trailers] > [Film]. Elke fase heeft een andere impact op de aandacht van het publiek.",
     buttons: [
-      { text: "Wat wordt er bedoeld met de ad reel?", action: "go_reel" },
-      { text: "Wat is premium?", action: "go_premium" }
+      { text: "Wat is Silver?", action: "go_silver" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Terug naar start", action: "go_fallback" }
     ]
   }
 };
+
 
 function sendQuestionFromBot(topicKey) {
   const topic = topics[topicKey] || topics.fallback;
