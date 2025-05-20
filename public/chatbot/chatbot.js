@@ -19,8 +19,7 @@ const topics = {
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
       { text: "Waarom kosten ze meer?", action: "go_cost" },
-      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" }
     ]
   },
   silver: {
@@ -29,8 +28,7 @@ const topics = {
       { text: "Wat is Gold?", action: "go_gold" },
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Wat is de ad reel?", action: "go_reel" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat is de ad reel?", action: "go_reel" }
     ]
   },
   gold: {
@@ -40,8 +38,7 @@ const topics = {
       { text: "Wat betekent de jingle?", action: "go_jingle" },
       { text: "Waarom kost het meer?", action: "go_cost" },
       { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
-      { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat betekent premium?", action: "go_premium" }
     ]
   },
   titanium: {
@@ -51,8 +48,7 @@ const topics = {
       { text: "Waarom kost het meer?", action: "go_cost" },
       { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
       { text: "Wat is Gold?", action: "go_gold" },
-      { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat betekent premium?", action: "go_premium" }
     ]
   },
   reel: {
@@ -62,8 +58,7 @@ const topics = {
       { text: "Wat is Gold?", action: "go_gold" },
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
-      { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat betekent premium?", action: "go_premium" }
     ]
   },
   jingle: {
@@ -72,8 +67,7 @@ const topics = {
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Wat is de ad reel?", action: "go_reel" },
       { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
-      { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat betekent premium?", action: "go_premium" }
     ]
   },
   cost: {
@@ -81,8 +75,7 @@ const topics = {
     buttons: [
       { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
       { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" }
     ]
   },
   benefits: {
@@ -90,8 +83,7 @@ const topics = {
     buttons: [
       { text: "Wat is Titanium?", action: "go_titanium" },
       { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" }
     ]
   },
   timeline: {
@@ -100,8 +92,7 @@ const topics = {
       { text: "Wat is Silver?", action: "go_silver" },
       { text: "Wat is Gold?", action: "go_gold" },
       { text: "Wat is Titanium?", action: "go_titanium" },
-      { text: "Wat betekent premium?", action: "go_premium" },
-      { text: "Terug naar start", action: "go_fallback" }
+      { text: "Wat betekent premium?", action: "go_premium" }
     ]
   }
 };
