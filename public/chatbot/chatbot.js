@@ -1,184 +1,174 @@
-// CHATBOT SCRIPT - with natural prompt-style buttons
-async function sendQuestion() {
-  const userInputField = document.getElementById('user-input');
-  const userInput = userInputField.value;
-  if (!userInput.trim()) return;
+// Chatbot with Static Topic Buttons
+const startOptions = [
+  { text: "Ik vraag me af wat Premium is?", action: "go_premium" },
+  // Client can enable these by removing the comments:
+  // { text: "vul hier de vraagtitel in", action: "go_xyz" },
+  // { text: "vul hier de vraagtitel in", action: "go_xyz" }
+];
 
-  document.querySelectorAll('.button-container').forEach(container => container.remove());
-  const chatbox = document.getElementById('chatbox');
-
-  const userMsg = document.createElement('div');
-  userMsg.className = 'message user-message';
-  userMsg.textContent = userInput;
-  chatbox.appendChild(userMsg);
-
-  const response = await getChatbotResponse(userInput);
-  if (response.fallbackToAPI) {
-    const hfResponse = await fetch("chat.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ inputs: userInput })
-    });
-    const hfJson = await hfResponse.json();
-    response.text = hfJson[0]?.generated_text || "Er ging iets mis met de AI response.";
-  }
-
-  const botMsg = document.createElement('div');
-  botMsg.className = 'message bot-message';
-  botMsg.textContent = response.text;
-  chatbox.appendChild(botMsg);
-
-  if (response.buttons) {
-    createButtons(response.buttons, chatbox);
-  }
-
-  chatbox.scrollTop = chatbox.scrollHeight;
-  userInputField.value = '';
-}
-
-const getChatbotResponse = async (userInput) => {
-  const lowerInput = userInput.toLowerCase();
-  if (lowerInput.includes('budget')) {
-    return {
-      text: "Cinema marketing hoeft geen miljoenen te kosten. Wat is je budget ongeveer?",
-      buttons: [
-        { text: "Ik heb een klein maar krachtig budget.", action: "budget_low" },
-        { text: "Ik wil een gebalanceerd bereik.", action: "budget_mid" },
-        { text: "Ik wil maximale impact.", action: "budget_high" }
-      ]
-    };
-  } else if (lowerInput.includes('locatie')) {
-    return {
-      text: "Wat wil je weten over de locatie?",
-      buttons: [
-        { text: "Hoeveel cinema’s kan ik kiezen?", action: "location_how_many" },
-        { text: "Kan ik meerdere regio’s combineren?", action: "location_combine" },
-        { text: "Welke locaties zijn het meest effectief?", action: "location_effective" },
-        { text: "Wat als ik nationaal wil adverteren?", action: "location_national" }
-      ]
-    };
-  } else if (lowerInput.includes('duur') || lowerInput.includes('hoe lang')) {
-    return {
-      text: "Hoe lang wil je dat je campagne loopt?",
-      buttons: [
-        { text: "Ik wil een campagne van 1 week.", action: "duration_1w" },
-        { text: "Ik wil een campagne van 1 maand.", action: "duration_1m" },
-        { text: "Ik wil langdurig adverteren.", action: "duration_long" }
-      ]
-    };
-  } else if (lowerInput.includes('doelgroep') || lowerInput.includes('wie wil je bereiken')) {
-    return {
-      text: "Wie wil je bereiken met je advertentie?",
-      buttons: [
-        { text: "Ik wil jongeren tussen 16 en 25 bereiken.", action: "audience_youth" },
-        { text: "Ik wil gezinnen bereiken.", action: "audience_families" },
-        { text: "Ik wil professionals bereiken.", action: "audience_pros" }
-      ]
-    };
-  } else {
-    return {
-      text: "Ik heb dat niet helemaal begrepen. Probeer iets te vragen over je budget, locatie, duur of doelgroep.",
-      buttons: [
-        { text: "Wat is het budget?", action: "go_budget" },
-        { text: "Wat zijn mijn locatie-opties?", action: "go_location" },
-        { text: "Wat is een goede looptijd?", action: "go_duration" },
-        { text: "Welke doelgroep kan ik kiezen?", action: "go_audience" }
-      ]
-    };
+const topics = {
+  fallback: {
+    text: "Geen probleem! Kies een onderwerp om meer over te weten te komen.",
+    buttons: startOptions
+  },
+  premium: {
+    text: "💎 Premium posities zorgen voor extra zichtbaarheid van je advertentie. Er zijn drie opties: Silver, Gold en Titanium. Ze zitten op strategische plekken in de tijdlijn en geven je meer impact — tegen een iets hogere prijs.",
+    buttons: [
+      { text: "Wat is Silver?", action: "go_silver" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Waarom kosten ze meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" }
+    ]
+  },
+  silver: {
+    text: "🥈 Silver is de voorlaatste advertentie in de ad reel. Net voor Gold dus — een strategisch sterke plek. 🎯 Gemiddeld kijkt 70–80% van de zaal actief mee op dit moment. Een slimme keuze voor een kleine meerprijs.",
+    buttons: [
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Wat is de ad reel?", action: "go_reel" }
+    ]
+  },
+  gold: {
+    text: "🥇 Gold is de laatste advertentie vóór de jingle. Je advertentie sluit het hoofdblok af, net voor het pauzemoment. 🧠 Ongeveer 85–90% van de zaal kijkt dan actief mee — een van de sterkste posities qua impact.",
+    buttons: [
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent de jingle?", action: "go_jingle" },
+      { text: "Waarom kost het meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Wat betekent premium?", action: "go_premium" }
+    ]
+  },
+  titanium: {
+    text: "🚀 Titanium wordt getoond ná de jingle en vlak vóór de trailers. Het publiek zit dan al klaar, dus maximale zichtbaarheid gegarandeerd. 👁️ Ongeveer 95–100% van de zaal kijkt mee — de allersterkste positie voor impact.",
+    buttons: [
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Waarom kost het meer?", action: "go_cost" },
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat betekent premium?", action: "go_premium" }
+    ]
+  },
+  reel: {
+    text: "📦 De ad reel is een blok van 10–13 minuten advertenties vóór de film. Silver en Gold zijn de laatste plekken in deze reel. 🚫 Titanium zit niet in de ad reel — die wordt apart getoond, ná de jingle en vóór de trailers.",
+    buttons: [
+      { text: "Wat is Silver?", action: "go_silver" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Wat betekent premium?", action: "go_premium" }
+    ]
+  },
+  jingle: {
+    text: "🔔 De jingle speelt twee keer: één keer vóór de ad reel en nog eens voor Titanium. Het markeert de overgang naar trailers of film.",
+    buttons: [
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat is de ad reel?", action: "go_reel" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" },
+      { text: "Wat betekent premium?", action: "go_premium" }
+    ]
+  },
+  cost: {
+    text: "💰 De meerprijs hangt af van je campagne. Richtlijn: Silver kost ongeveer 10–15% meer dan een standaardpositie, Gold 25–30%, en Titanium zelfs 50–60% extra. Hoe strategischer de plek, hoe groter de impact én het prijskaartje.",
+    buttons: [
+      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" }
+    ]
+  },
+  benefits: {
+    text: "📈 Meer zichtbaarheid zorgt voor meer impact, merkherkenning en hogere ROI. Titanium scoort hier het best — vooral bij bioscoopcampagnes waar iedereen al gefocust is op het scherm.",
+    buttons: [
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent premium?", action: "go_premium" },
+      { text: "Hoe ziet de tijdlijn eruit?", action: "go_timeline" }
+    ]
+  },
+  timeline: {
+    text: "🕒 Tijdlijn: [Jingle] > [Standaard ad reel] > [Premium ad reel: Silver & Gold] > [Jingle] > [Premium slot: Titanium] > [Trailers] > [Film]. Elke fase heeft een andere impact op de aandacht van het publiek.",
+    buttons: [
+      { text: "Wat is Silver?", action: "go_silver" },
+      { text: "Wat is Gold?", action: "go_gold" },
+      { text: "Wat is Titanium?", action: "go_titanium" },
+      { text: "Wat betekent premium?", action: "go_premium" }
+    ]
   }
 };
 
-function handleButtonClick(action, label = null) {
+
+function sendQuestionFromBot(topicKey) {
+  const topic = topics[topicKey] || topics.fallback;
   const chatbox = document.getElementById('chatbox');
-  let reply = "";
-  let againBtns = [];
 
-  if (label && !action.startsWith('go_')) {
-  const msg = document.createElement('div');
-  msg.className = 'message user-message';
-  msg.textContent = label;
-  chatbox.appendChild(msg);
-}
-
-
-  switch (action) {
-    case 'budget_low': reply = "Klein maar krachtig is helemaal prima!"; break;
-    case 'budget_mid': reply = "Lekker bezig! Dit geeft je wat speelruimte."; break;
-    case 'budget_high': reply = "Oeh, maximale impact dus!"; break;
-    case 'location_how_many': reply = "Je kiest zelf hoeveel cinema's je gebruikt."; break;
-    case 'location_combine': reply = "Je kan regio's combineren."; break;
-    case 'location_effective': reply = "Effectieve locaties hangen af van je doelgroep."; break;
-    case 'location_national': reply = "Nationaal? Zeker mogelijk."; break;
-    case 'duration_1w': reply = "Ideaal voor korte acties."; break;
-    case 'duration_1m': reply = "Een maand is perfect voor zichtbaarheid."; break;
-    case 'duration_long': reply = "Langlopend werkt goed voor branding."; break;
-    case 'audience_youth': reply = "Jongeren houden van cinema en tech."; break;
-    case 'audience_families': reply = "Perfect voor merken gericht op ouders."; break;
-    case 'audience_pros': reply = "Professionals bezoeken ‘s avonds bioscopen."; break;
-    case 'go_budget': return sendQuestionFromBot("Wat is je budget?");
-    case 'go_location': return sendQuestionFromBot("In welke locatie wil je adverteren?");
-    case 'go_duration': return sendQuestionFromBot("Hoe lang wil je adverteren?");
-    case 'go_audience': return sendQuestionFromBot("Welke doelgroep wil je bereiken?");
-    case 'go_fallback': return sendQuestionFromBot("Ik heb iets anders nodig.");
-    default: reply = "Actie niet herkend.";
+  // ✅ Inject fallback button to all topics except fallback itself
+  let buttonList = topic.buttons ? [...topic.buttons] : [];
+  if (topicKey !== "fallback") {
+    buttonList.push({
+      text: "Ik heb een andere vraag",
+      action: "go_fallback"
+    });
   }
 
-  const replyMsg = document.createElement('div');
-  replyMsg.classList.add('message', 'bot-message');
-  replyMsg.textContent = reply;
-  chatbox.appendChild(replyMsg);
-
-  const followUp = document.createElement('div');
-  followUp.classList.add('message', 'bot-message');
-  followUp.textContent = "Kan ik je bij nog iets anders helpen?";
-  chatbox.appendChild(followUp);
-
-  againBtns = createAgainButtons(action);
-  againBtns.push({ text: "Andere", action: "go_fallback" });
-
-  createButtons(againBtns, chatbox);
+  // Show typing animation
+  const typingIndicator1 = document.createElement('div');
+  typingIndicator1.className = 'message bot-message typing-indicator';
+  typingIndicator1.innerHTML = `
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  `;
+  chatbox.appendChild(typingIndicator1);
   chatbox.scrollTop = chatbox.scrollHeight;
-}
 
-function createAgainButtons(action) {
-  switch (action) {
-    case 'budget_low':
-    case 'budget_mid':
-    case 'budget_high':
-      return [
-        { text: "Ik heb een klein maar krachtig budget.", action: "budget_low" },
-        { text: "Ik wil een gebalanceerd bereik.", action: "budget_mid" },
-        { text: "Ik wil maximale impact.", action: "budget_high" }
-      ];
-    case 'location_how_many':
-    case 'location_combine':
-    case 'location_effective':
-    case 'location_national':
-      return [
-        { text: "Hoeveel cinema’s kan ik kiezen?", action: "location_how_many" },
-        { text: "Kan ik meerdere regio’s combineren?", action: "location_combine" },
-        { text: "Welke locaties zijn het meest effectief?", action: "location_effective" },
-        { text: "Wat als ik nationaal wil adverteren?", action: "location_national" }
-      ];
-    case 'duration_1w':
-    case 'duration_1m':
-    case 'duration_long':
-      return [
-        { text: "Ik wil een campagne van 1 week.", action: "duration_1w" },
-        { text: "Ik wil een campagne van 1 maand.", action: "duration_1m" },
-        { text: "Ik wil langdurig adverteren.", action: "duration_long" }
-      ];
-    case 'audience_youth':
-    case 'audience_families':
-    case 'audience_pros':
-      return [
-        { text: "Ik wil jongeren tussen 16 en 25 bereiken.", action: "audience_youth" },
-        { text: "Ik wil gezinnen bereiken.", action: "audience_families" },
-        { text: "Ik wil professionals bereiken.", action: "audience_pros" }
-      ];
-    default:
-      return [];
-  }
+  // Main message after delay
+  setTimeout(() => {
+    typingIndicator1.remove();
+
+    const botMsg = document.createElement('div');
+    botMsg.className = 'message bot-message';
+    botMsg.textContent = topic.text;
+    chatbox.appendChild(botMsg);
+    chatbox.scrollTop = chatbox.scrollHeight;
+    // Instantly show buttons for fallback
+    if (topicKey === "fallback") {
+      createButtons(topic.buttons, chatbox);
+      chatbox.scrollTop = chatbox.scrollHeight;
+      return; // Exit early so no delay kicks in
+    }
+
+    setTimeout(() => {
+      // Skip follow-up line for fallback topic
+      if (topicKey !== "fallback") {
+        const typingIndicator2 = document.createElement('div');
+        typingIndicator2.className = 'message bot-message typing-indicator';
+        typingIndicator2.innerHTML = `
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        `;
+        chatbox.appendChild(typingIndicator2);
+        chatbox.scrollTop = chatbox.scrollHeight;
+        
+        setTimeout(() => {
+          typingIndicator2.remove();
+
+          const followUp = document.createElement('div');
+          followUp.className = 'message bot-message';
+          followUp.textContent = "Kan ik je bij nog iets helpen?";
+          chatbox.appendChild(followUp);
+
+          createButtons(buttonList, chatbox);
+          chatbox.scrollTop = chatbox.scrollHeight;
+        }, 2000);
+      } else {
+        // 🧼 fallback: just show the buttons immediately
+        createButtons(buttonList, chatbox);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
+    }, 2000);
+  }, 1500);
 }
 
 function createButtons(buttons, chatbox) {
@@ -186,39 +176,49 @@ function createButtons(buttons, chatbox) {
   container.classList.add('button-container');
 
   buttons.forEach(button => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('button-wrapper');
+
     const el = document.createElement('button');
     el.classList.add('button');
     el.textContent = button.text;
-    el.onclick = (e) => {
-      e.stopPropagation();
-      const toRemove = e.target.closest('.button-container');
-      if (toRemove) toRemove.remove();
-      handleButtonClick(button.action, button.text);
+
+    el.onclick = () => {
+      container.remove();
+      const msg = document.createElement('div');
+      msg.className = 'message user-message';
+      msg.textContent = button.text;
+      chatbox.appendChild(msg);
+      sendQuestionFromBot(button.action.replace('go_', ''));
     };
-    container.appendChild(el);
+
+    wrapper.appendChild(el);
+    container.appendChild(wrapper);
   });
 
   chatbox.appendChild(container);
 }
 
-function sendQuestionFromBot(message) {
-  document.getElementById('user-input').value = message;
-  sendQuestion();
+
+document.getElementById('chat-toggle').addEventListener('click', () => {
+  const chatWrapper = document.getElementById('chat-wrapper');
+  const chatbox = document.getElementById('chatbox');
+
+  const isHidden = chatWrapper.classList.contains('hidden');
+  chatWrapper.classList.toggle('hidden');
+document.getElementById('chat-close').addEventListener('click', () => {
+  document.getElementById('chat-wrapper').classList.add('hidden');
+});
+
+  if (isHidden && chatbox.childElementCount === 0) {
+  const greeting = document.createElement('div');
+  greeting.className = 'message bot-message';
+  greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
+  chatbox.appendChild(greeting);
+
+  createButtons(startOptions, chatbox);
+
 }
 
-document.getElementById('user-input').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') sendQuestion();
 });
 
-const chatWrapper = document.getElementById('chat-wrapper');
-const chatToggle = document.getElementById('chat-toggle');
-const chatClose = document.getElementById('chat-close');
-
-chatToggle.addEventListener('click', () => chatWrapper.classList.remove('hidden'));
-chatClose.addEventListener('click', () => chatWrapper.classList.add('hidden'));
-
-document.addEventListener('click', (e) => {
-  if (!chatWrapper.contains(e.target) && !chatToggle.contains(e.target)) {
-    chatWrapper.classList.add('hidden');
-  }
-});
