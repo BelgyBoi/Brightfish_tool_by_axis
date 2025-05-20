@@ -89,7 +89,7 @@ function sendQuestionFromBot(topicKey) {
   let buttonList = topic.buttons ? [...topic.buttons] : [];
   if (topicKey !== "fallback") {
     buttonList.push({
-      text: "Terug naar start",
+      text: "Ik heb een andere vraag",
       action: "go_fallback"
     });
   }
