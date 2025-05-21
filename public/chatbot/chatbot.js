@@ -1,3 +1,6 @@
+console.log("✅ Chatbot script loaded");
+
+
 // Chatbot with Static Topic Buttons
 const startOptions = [
   { text: "Ik vraag me af wat Premium is?", action: "go_premium" },
@@ -199,26 +202,38 @@ function createButtons(buttons, chatbox) {
   chatbox.appendChild(container);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("🚀 DOM fully loaded");
 
-document.getElementById('chat-toggle').addEventListener('click', () => {
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatClose = document.getElementById('chat-close');
   const chatWrapper = document.getElementById('chat-wrapper');
   const chatbox = document.getElementById('chatbox');
 
-  const isHidden = chatWrapper.classList.contains('hidden');
-  chatWrapper.classList.toggle('hidden');
-document.getElementById('chat-close').addEventListener('click', () => {
-  document.getElementById('chat-wrapper').classList.add('hidden');
+  chatToggle.addEventListener('click', () => {
+    const isHidden = chatWrapper.classList.contains('hidden');
+    chatWrapper.classList.toggle('hidden');
+
+    if (isHidden) {
+      console.log("✅ Chatbot opened");
+
+      // Reset chatbox if needed
+      if (chatbox.childElementCount === 0) {
+        const greeting = document.createElement('div');
+        greeting.className = 'message bot-message';
+        greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
+        chatbox.appendChild(greeting);
+      }
+
+      // Only add buttons if not already present
+      const hasButtons = chatbox.querySelector('.button-container');
+      if (!hasButtons) {
+        createButtons(startOptions, chatbox);
+      }
+    }
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatWrapper.classList.add('hidden');
+  });
 });
-
-  if (isHidden && chatbox.childElementCount === 0) {
-  const greeting = document.createElement('div');
-  greeting.className = 'message bot-message';
-  greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
-  chatbox.appendChild(greeting);
-
-  createButtons(startOptions, chatbox);
-
-}
-
-});
-
