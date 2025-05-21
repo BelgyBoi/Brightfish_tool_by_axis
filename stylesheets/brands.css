@@ -1,10 +1,8 @@
 .brands-section {
-    position: absolute;
-      background-color: #f3f3f3;
-      margin-top: 100vh;
-      padding: 60px 20px;
-      text-align: center;
-      width: 100%;
+    background-color: #f3f3f3;
+    padding: 60px 20px;
+    text-align: center;
+    width: 100%;
     }
 
     .brands-section h2 {

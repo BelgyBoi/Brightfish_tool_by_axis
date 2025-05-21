@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brightfish - Based on campaign 1</title>
-    <link rel="stylesheet" href="../../stylesheets/header.css">
-    <link rel="stylesheet" href="../../stylesheets/progress2.css">
-    <link rel="stylesheet" href="../../stylesheets/brands2.css">
-    <link rel="stylesheet" href="../../stylesheets/footer2.css">
-    <link rel="stylesheet" href="../../stylesheets/flow1_screen2.css">
-    <link rel="icon" type="image/png" href="../../images/brightfish_logo_small.png">
+    <link rel="icon" type="image/png" href="../images/brightfish_logo_small.png">
 </head>
 <body>
-    <?php include '../../components/header.php';?>
-    <?php include '../../components/progress.php';?>
+    <?php include '../components/header.php';?>
+    <?php include '../components/progress.php';?>
     <div class="container">
         <div class="innerContainer">
             <h1>Select your movie(s) for the campaign</h1>
@@ -23,7 +18,7 @@
                 <button class="search-icon">🔍</button>
             </div>
 
-            <div class="movie-grid" id="movieGrid">
+            <div class="grid" id="movieGrid">
                 <?php
                 $movies = [
                     ["img" => "movies/Destination.svg", "title" => "Destination<br>Finale Bloodlines"],
@@ -44,42 +39,49 @@
                     $cleanTitle = strtolower(strip_tags($movie['title']));
                     echo '
                     <div class="movie-card" data-title="' . $cleanTitle . '">
-                        <img src="../../images/' . $movie['img'] . '" alt="' . strip_tags($movie['title']) . '">
+                        <div class="poster-wrapper">
+                            <img src="../images/' . $movie['img'] . '" alt="' . strip_tags($movie['title']) . '">
+                        </div>
                         <div class="title-info">
                             <p>' . $movie['title'] . '</p>
                             <span class="info">ℹ️</span>
                         </div>
                     </div>';
                 }
+
                 ?>
             </div>
 
-            <div class="button-group">
-                <a class="next-btn" href="../screen3/index.php">Next question</a>
-                <a href="../screen1/index.php" class="back-link">Go back</a>
-            </div>
+            <?php include($_SERVER['DOCUMENT_ROOT'] . "/components/buttons.php"); ?>
+
         </div>
     </div>
-    <?php include '../../components/brands.php';?>
-    <?php include '../../components/footer.php';?>
+    <?php include '../components/brands.php';?>
+    <?php include '../components/footer.php';?>
 
     <script>
         const searchInput = document.getElementById("searchInput");
         const movieCards = document.querySelectorAll(".movie-card");
-
+                    
+        // SEARCH: Show/hide cards based on query
         searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase();
-            movieCards.forEach(card => {
-                const title = card.getAttribute("data-title");
-                card.style.display = title.includes(query) ? "block" : "none";
-            });
+          const query = searchInput.value.toLowerCase();
+          movieCards.forEach(card => {
+            const title = card.getAttribute("data-title");
+            card.style.display = title.includes(query) ? "block" : "none";
+          });
+        });
+        
+        // SELECTION: Toggle 'selected' class on .poster-wrapper
+        movieCards.forEach(card => {
+          card.addEventListener("click", () => {
+            const poster = card.querySelector(".poster-wrapper");
+            if (poster) {
+              poster.classList.toggle("selected");
+            }
+          });
         });
 
-        movieCards.forEach(card => {
-            card.addEventListener("click", () => {
-                card.classList.toggle("selected");
-            });
-        });
     </script>
 </body>
 </html>

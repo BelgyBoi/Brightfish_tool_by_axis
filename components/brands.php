@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/stylesheets/brands.css">
 <div class="brands-section">
     <h2>Top brands choose cinema advertising</h2>
     <p>Join the brands that trust Brightfish to reach new audiences</p>

@@ -1,4 +1,6 @@
-<<<<<<< Updated upstream
+console.log("✅ Chatbot script loaded");
+
+
 // Chatbot with Static Topic Buttons
 const startOptions = [
   { text: "Ik vraag me af wat Premium is?", action: "go_premium" },
@@ -170,155 +172,13 @@ function sendQuestionFromBot(topicKey) {
       }
     }, 2000);
   }, 1500);
-=======
-// Brightbuddy Chatbot – Cleaned & Rewritten
-let lastTopic = null;
-
-const topics = {
-  premium: {
-    text: "💎 Premium posities zoals Silver, Gold en Titanium geven je advertentie meer zichtbaarheid. Ze zijn iets duurder, maar strategisch geplaatst.",
-    buttons: [
-      { text: "Wat is Silver?", action: "go_silver" },
-      { text: "Waarom kost het meer?", action: "go_cost" },
-      { text: "Wat is de meest premium plek?", action: "go_titanium" }
-    ]
-  },
-  cost: {
-    text: "💰 Premium posities zijn duurder omdat ze meer impact hebben. Titanium wordt bijvoorbeeld getoond vlak vóór de trailers, wanneer iedereen al klaarzit.",
-    buttons: [
-      { text: "Wat krijg ik ervoor terug?", action: "go_benefits" },
-      { text: "Toon tijdlijn", action: "go_timeline" }
-    ]
-  },
-  benefits: {
-    text: "📈 Meer zichtbaarheid = meer resultaat. Premium posities zorgen voor meer aandacht, betere merkherkenning en dus meer waarde voor je advertentie.",
-    buttons: [
-      { text: "Wat is Gold?", action: "go_gold" },
-      { text: "Waar zit Titanium dan precies?", action: "go_timeline" }
-    ]
-  },
-  silver: {
-    text: "🥈 De Silver-positie is de voorlaatste advertentie in de Brightfish ad reel. Een sterke plek net voor het einde van het reclameblok.",
-    buttons: [
-      { text: "Wat is Gold?", action: "go_gold" },
-      { text: "Is dit een premium positie?", action: "go_premium" }
-    ]
-  },
-  gold: {
-    text: "🥇 De Gold-positie is de laatste advertentie in de ad reel, vlak vóór de Brightfish jingle. Je ad sluit het reclameblok af.",
-    buttons: [
-      { text: "Wat is Titanium?", action: "go_titanium" },
-      { text: "Waarom zou ik Gold kiezen?", action: "go_benefits" }
-    ]
-  },
-  titanium: {
-    text: "🚀 Titanium is de meest premium positie — je advertentie wordt getoond ná de ad reel, vlak vóór de trailers. Iedereen zit dan al klaar: topzichtbaarheid.",
-    buttons: [
-      { text: "Wat kost dat?", action: "go_cost" },
-      { text: "Wat is het verschil met Gold?", action: "go_gold" },
-      { text: "Toon de tijdlijn", action: "go_timeline" }
-    ]
-  },
-  reel: {
-    text: "📦 De ad reel is een blok van 10–13 minuten waarin alle standaard en premium advertenties zitten. Silver en Gold zitten daar als laatste in.",
-    buttons: [
-      { text: "Wat zit ervoor?", action: "go_jingle" },
-      { text: "Wat komt erna?", action: "go_titanium" }
-    ]
-  },
-  jingle: {
-    text: "🔔 De Brightfish jingle speelt twee keer: voor de ad reel en vlak voor Titanium. Het markeert het begin en einde van het reclameblok.",
-    buttons: [
-      { text: "Wat komt er na de jingle?", action: "go_trailers" },
-      { text: "Waar zit mijn advertentie?", action: "go_timeline" }
-    ]
-  },
-  timeline: {
-    text: "📊 De tijdlijn start met trailers, gevolgd door de jingle, dan de ad reel (met Silver en Gold), opnieuw een jingle en als laatste: Titanium. Daarna start de film.",
-    buttons: [
-      { text: "Wat is een ad reel?", action: "go_reel" },
-      { text: "Wat is Silver?", action: "go_silver" },
-      { text: "Wat is Titanium?", action: "go_titanium" }
-    ]
-  },
-  fallback: {
-    text: "Ik begrijp je vraag niet helemaal. Je kan iets vragen over Silver, Gold, Titanium, ad reels, jingles of premium posities.",
-    buttons: [
-      { text: "Wat is Silver?", action: "go_silver" },
-      { text: "Wat is Titanium?", action: "go_titanium" },
-      { text: "Wat is een ad reel?", action: "go_reel" },
-      { text: "Wat is een jingle?", action: "go_jingle" }
-    ]
-  }
-};
-
-async function getChatbotResponse(userInput) {
-  const lower = userInput.toLowerCase();
-
-  if (lower.includes("silver")) return lastTopic = "silver", topics.silver;
-  if (lower.includes("gold")) return lastTopic = "gold", topics.gold;
-  if (lower.includes("titanium")) return lastTopic = "titanium", topics.titanium;
-  if (lower.includes("premium")) return lastTopic = "premium", topics.premium;
-  if (lower.includes("reel")) return lastTopic = "reel", topics.reel;
-  if (lower.includes("jingle")) return lastTopic = "jingle", topics.jingle;
-  if (lower.includes("tijdlijn")) return lastTopic = "timeline", topics.timeline;
-  if (lower.includes("waarom") && lower.includes("kost") && lastTopic === "premium") return topics.cost;
-  if (lower.includes("wat") && lower.includes("terug") && lastTopic === "premium") return topics.benefits;
-
-  return topics.fallback;
-}
-
-async function sendQuestion() {
-  const userInputField = document.getElementById("user-input");
-  const userInput = userInputField.value.trim();
-  if (!userInput) return;
-
-  document.querySelectorAll(".button-container").forEach(c => c.remove());
-  const chatbox = document.getElementById("chatbox");
-
-  const userMsg = document.createElement("div");
-  userMsg.className = "message user-message";
-  userMsg.textContent = userInput;
-  chatbox.appendChild(userMsg);
-
-  const response = await getChatbotResponse(userInput);
-
-  const botMsg = document.createElement("div");
-  botMsg.className = "message bot-message";
-  botMsg.textContent = response.text;
-  chatbox.appendChild(botMsg);
-
-  if (response.buttons) {
-    createButtons(response.buttons, chatbox);
-  }
-
-  chatbox.scrollTop = chatbox.scrollHeight;
-  userInputField.value = "";
-}
-
-function handleButtonClick(action, label = null) {
-  if (label) {
-    const msg = document.createElement("div");
-    msg.className = "message user-message";
-    msg.textContent = label;
-    document.getElementById("chatbox").appendChild(msg);
-  }
-  lastTopic = action.replace("go_", "");
-  sendQuestionFromBot(action);
-}
-
-function sendQuestionFromBot(text) {
-  document.getElementById("user-input").value = text;
-  sendQuestion();
->>>>>>> Stashed changes
 }
 
 function createButtons(buttons, chatbox) {
-  const container = document.createElement("div");
-  container.classList.add("button-container");
+  const container = document.createElement('div');
+  container.classList.add('button-container');
 
   buttons.forEach(button => {
-<<<<<<< Updated upstream
     const wrapper = document.createElement('div');
     wrapper.classList.add('button-wrapper');
 
@@ -333,14 +193,6 @@ function createButtons(buttons, chatbox) {
       msg.textContent = button.text;
       chatbox.appendChild(msg);
       sendQuestionFromBot(button.action.replace('go_', ''));
-=======
-    const el = document.createElement("button");
-    el.classList.add("button");
-    el.textContent = button.text;
-    el.onclick = () => {
-      container.remove();
-      handleButtonClick(button.action, button.text);
->>>>>>> Stashed changes
     };
 
     wrapper.appendChild(el);
@@ -350,48 +202,38 @@ function createButtons(buttons, chatbox) {
   chatbox.appendChild(container);
 }
 
-<<<<<<< Updated upstream
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("🚀 DOM fully loaded");
 
-document.getElementById('chat-toggle').addEventListener('click', () => {
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatClose = document.getElementById('chat-close');
   const chatWrapper = document.getElementById('chat-wrapper');
   const chatbox = document.getElementById('chatbox');
 
-  const isHidden = chatWrapper.classList.contains('hidden');
-  chatWrapper.classList.toggle('hidden');
-document.getElementById('chat-close').addEventListener('click', () => {
-  document.getElementById('chat-wrapper').classList.add('hidden');
+  chatToggle.addEventListener('click', () => {
+    const isHidden = chatWrapper.classList.contains('hidden');
+    chatWrapper.classList.toggle('hidden');
+
+    if (isHidden) {
+      console.log("✅ Chatbot opened");
+
+      // Reset chatbox if needed
+      if (chatbox.childElementCount === 0) {
+        const greeting = document.createElement('div');
+        greeting.className = 'message bot-message';
+        greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
+        chatbox.appendChild(greeting);
+      }
+
+      // Only add buttons if not already present
+      const hasButtons = chatbox.querySelector('.button-container');
+      if (!hasButtons) {
+        createButtons(startOptions, chatbox);
+      }
+    }
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatWrapper.classList.add('hidden');
+  });
 });
-
-  if (isHidden && chatbox.childElementCount === 0) {
-  const greeting = document.createElement('div');
-  greeting.className = 'message bot-message';
-  greeting.innerHTML = "<strong>Chatbot:</strong> Hallo ik ben Brightbuddy, waar kan ik je vandaag mee helpen?";
-  chatbox.appendChild(greeting);
-
-  createButtons(startOptions, chatbox);
-
-}
-
-});
-
-=======
-// Chat toggle logic
-document.getElementById("user-input").addEventListener("keydown", e => {
-  if (e.key === "Enter") sendQuestion();
-});
-
-document.getElementById("chat-toggle").addEventListener("click", () => {
-  document.getElementById("chat-wrapper").classList.remove("hidden");
-});
-
-document.getElementById("chat-close").addEventListener("click", () => {
-  document.getElementById("chat-wrapper").classList.add("hidden");
-});
-
-document.addEventListener("click", e => {
-  if (!document.getElementById("chat-wrapper").contains(e.target) &&
-      !document.getElementById("chat-toggle").contains(e.target)) {
-    document.getElementById("chat-wrapper").classList.add("hidden");
-  }
-});
->>>>>>> Stashed changes
