@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brightfish - Based on campaign 5</title>
+    <title>Brightfish - Based on budget 5</title>
     <link rel="icon" type="image/png" href="../images/brightfish_logo_small.png">
 </head>
 <body>
@@ -48,7 +48,6 @@
                 <input type="text" id="business" name="business" placeholder="Type your business">
               </div>
             </div>
-
 
           <?php require_once COMPONENTS_PATH . 'buttons.php'; ?>
 
@@ -128,11 +127,6 @@
 
     adSlotSelect.addEventListener("change", validateAdSlotSelection);
     window.addEventListener("load", validateAdSlotSelection); // Init bij laden
-
-    
-        
-
-
     </script>
 
 </body>

@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="/stylesheets/footer.css">
+<link rel="stylesheet" href="<?= STYLES_URL ?>footer.css">
 <footer>
     <div class="footer-container">
       <div class="footer-left">
         <div class="logo">
-          <img src="../../images/brightfish_logo_full.png" alt="Brightfish logo">
+          <img src="<?= IMAGES_URL ?>brightfish_logo_full.png" alt="Brightfish logo">
         </div>
         <p>Sign up to receive the latest movie and advertising news!</p>
         <div class="newsletter">

@@ -10,7 +10,7 @@
       $currentScreen = isset($matches[1]) ? intval($matches[1]) : 1;
   }
 ?>
-<link rel="stylesheet" href="/stylesheets/progress.css">
+<link rel="stylesheet" href="<?= STYLES_URL ?>progress.css">
 <div class="progressBar" data-current="<?= $currentScreen ?>" data-total="<?= $totalScreens ?>">
   <div class="progress"></div>
 </div>
