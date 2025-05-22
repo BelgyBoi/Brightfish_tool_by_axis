@@ -1,17 +1,18 @@
+<?php require_once __DIR__ . '/../config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brightfish - Based on campaign 1</title>
+    <title>Brightfish - Based on campaign 4</title>
     <link rel="icon" type="image/png" href="../images/brightfish_logo_small.png">
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 <body>
-    <?php include '../components/header.php';?>
-    <?php include '../components/progress.php';?>
+    <?php require_once COMPONENTS_PATH . 'header.php'; ?>
+    <?php require_once COMPONENTS_PATH . 'progress.php'; ?>
     <div class="container">
         <div class="innerContainer">
             <h1>Set Your Ad Duration and Dates</h1>
@@ -36,7 +37,7 @@
                 </div>
             </div>
 
-            <?php include($_SERVER['DOCUMENT_ROOT'] . "/components/buttons.php"); ?>
+            <?php require_once COMPONENTS_PATH . 'buttons.php'; ?>
 
         </div>
     </div>
@@ -57,43 +58,71 @@
         </div>
     </div>
 
-    <?php include '../components/brands.php';?>
-    <?php include '../components/footer.php';?>
+    <?php require_once COMPONENTS_PATH . 'brands.php'; ?>
+    <?php require_once COMPONENTS_PATH . 'footer.php'; ?>     
 
     <<!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr">
+    <script>
 
-        flatpickr("#campaignPeriod", {
-          inline: true, // for dev/testing, remove if you want it dropdown-style
-          dateFormat: "d/m/Y",
-          disableMobile: true,
-          clickOpens: true,
-          onDayCreate: function(dObj, dStr, fp, dayElem) {
-            // Optional: style Tuesdays uniquely to hint they're "start of week"
-            const date = new Date(dayElem.dateObj);
-            if (date.getDay() === 2) { // 2 = Tuesday
-              dayElem.style.border = "2px solid #28a746";
-              dayElem.style.borderRadius = "50%";
-            }
-          },
-          onChange: function(selectedDates, dateStr, instance) {
-            const picked = selectedDates[0];
-            const day = picked.getDay();
+        const openBtn = document.getElementById("openCalendar");
+        const modal = document.getElementById("calendarModal");
+        const closeBtn = modal.querySelector(".close");
+        const confirmBtn = document.getElementById("confirmDate");
+        const input = document.getElementById("campaignPeriod");
+        let selectedRanges = [];
 
-            // Find the closest Tuesday before/at picked date
-            const start = new Date(picked);
-            start.setDate(picked.getDate() - ((day + 5) % 7)); // 2 = Tue
-
-            // End = next week's Wednesday
-            const end = new Date(start);
-            end.setDate(start.getDate() + 7); // Full Tues–Wed span
-        
-            const formattedStart = start.toLocaleDateString("en-GB");
-            const formattedEnd = end.toLocaleDateString("en-GB");
-        
-            document.getElementById("campaignPeriod").value = `${formattedStart} - ${formattedEnd}`;
-          }
+        document.querySelectorAll(".weeks button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                btn.classList.toggle("selected");
+                const range = btn.dataset.range;
+                if (btn.classList.contains("selected")) {
+                    selectedRanges.push(range);
+                } else {
+                    selectedRanges = selectedRanges.filter(r => r !== range);
+                }
+            });
         });
+
+        openBtn.onclick = () => modal.style.display = "block";
+        closeBtn.onclick = () => modal.style.display = "none";
+
+        confirmBtn.onclick = () => {
+            input.value = selectedRanges.join(", ");
+            modal.style.display = "none";
+            validateFields(); // ✅ Dit triggert validatie nadat datum is ingesteld
+        };
+
+        window.onclick = (e) => {
+            if (e.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        const adDurationInput = document.getElementById('adDuration');
+        const campaignPeriodInput = document.getElementById('campaignPeriod');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function validateFields() {
+            const adDuration = adDurationInput?.value.trim();
+            const campaignPeriod = campaignPeriodInput?.value.trim();
+
+            console.log("Ad:", adDuration, "| Period:", campaignPeriod); // Debug
+
+            const isValid = adDuration !== '' && campaignPeriod !== '';
+
+            if (nextBtn) {
+                nextBtn.classList.toggle('disabled', !isValid);
+                nextBtn.style.pointerEvents = isValid ? 'auto' : 'none';
+                nextBtn.style.opacity = isValid ? '1' : '0.5';
+            }
+        }
+
+        if (adDurationInput && campaignPeriodInput) {
+            adDurationInput.addEventListener('change', validateFields);
+            campaignPeriodInput.addEventListener('change', validateFields);
+
+            validateFields(); // Initieel
+        }
 
     </script>
 
